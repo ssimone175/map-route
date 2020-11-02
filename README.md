@@ -1,3 +1,8 @@
+# MAP ROUTE COMPONENT
+
+A Web Component for displaying a map with a route. 
+Created with HERE JavaScript API.
+
 # Customizable Attributes:
 
 ## Necessary

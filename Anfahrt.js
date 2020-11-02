@@ -1,6 +1,75 @@
+
 import all from "https://js.api.here.com/v3/3.1/mapsjs.bundle.js";
 
-class Anfahrt extends HTMLElement {
+let tmpl = document.createElement('template');
+tmpl.innerHTML = `
+        <style>
+                *{
+                font-size:1em;
+                }
+                
+                .form-group{
+                    width:100%;
+                    height:72px;
+                    display:flex;
+                    box-shadow:0px 10px 10px 10px rgba(0,0,0,0.05);
+                }   
+                .form-group:focus, .form-control:active{
+                    border:none;
+                    border-radius:0px;
+                }
+                .form-control{
+                    width:80%;
+                    min-height:40px;
+                    padding: 1em 2em;
+                    border:none;
+                    background-color:#fff;
+                    border-radius:0px;
+                }
+                .form-control:focus, .form-control:active{
+                    border:none;
+                    border-radius:0px;
+                }
+                button{
+                    border:none;
+                    background: var(--button-bg, #eee);
+                    border-radius:0px;
+                    width:20%;
+                }
+                button:hover{
+                    border:none;
+                    background: var(--button-hover-bg, #ddd);
+                    border-radius:0px;
+                }
+                button:active{
+                    border:none;
+                    border-radius:0px;
+                }
+                @media(max-width:375px){
+                     button{
+                         width:30%;
+                     }
+                    .form-control{
+                        width:70%;
+                    }
+                
+                }
+                @media(max-width:270px){
+                    button{
+                        width:40%;
+                    }
+                    .form-control{
+                        width:60%;
+                    }
+                
+                }
+        </style>
+        <div class="form-group">
+        <input id="input" class="form-control" placeholder="Startpunkt">
+        <button type="submit" id="button">Route starten</button>
+        </div>`;
+
+class MapRoute extends HTMLElement {
 
     constructor() {
         super();
@@ -279,7 +348,7 @@ class Anfahrt extends HTMLElement {
     }
 
 }
-window.customElements.define('map-route', Anfahrt);
+window.customElements.define('map-route', MapRoute);
 
 class MapInput extends HTMLElement {
 
@@ -287,72 +356,7 @@ class MapInput extends HTMLElement {
         super();
         console.log("Map-Input Component registered!");
         const shadowRoot = this.attachShadow({mode: 'open'});
-        shadowRoot.innerHTML = `
-        <style>
-                *{
-                font-size:1em;
-                }
-                
-                .form-group{
-                    width:100%;
-                    height:72px;
-                    display:flex;
-                    box-shadow:0px 10px 10px 10px rgba(0,0,0,0.05);
-                }   
-                .form-group:focus, .form-control:active{
-                    border:none;
-                    border-radius:0px;
-                }
-                .form-control{
-                    width:80%;
-                    min-height:40px;
-                    padding: 1em 2em;
-                    border:none;
-                    background-color:#fff;
-                    border-radius:0px;
-                }
-                .form-control:focus, .form-control:active{
-                    border:none;
-                    border-radius:0px;
-                }
-                button{
-                    border:none;
-                    background: var(--button-bg, #eee);
-                    border-radius:0px;
-                    width:20%;
-                }
-                button:hover{
-                    border:none;
-                    background: var(--button-hover-bg, #ddd);
-                    border-radius:0px;
-                }
-                button:active{
-                    border:none;
-                    border-radius:0px;
-                }
-                @media(max-width:375px){
-                     button{
-                         width:30%;
-                     }
-                    .form-control{
-                        width:70%;
-                    }
-                
-                }
-                @media(max-width:270px){
-                    button{
-                        width:40%;
-                    }
-                    .form-control{
-                        width:60%;
-                    }
-                
-                }
-        </style>
-        <div class="form-group">
-        <input id="input" class="form-control" placeholder="Startpunkt">
-        <button type="submit" id="button">Route starten</button>
-        </div>`;
+        shadowRoot.appendChild(tmpl.content.cloneNode(true));
 
     }
 
