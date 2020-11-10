@@ -155,7 +155,9 @@ class MapRoute extends HTMLElement {
         }else{
             this.createMap();
         }
-        this.addEventListener('map-input', e => this.origin = e.path[0].value);
+        this.addEventListener('map-input', (e) => {
+            this.origin = e.explicitOriginalTarget.value;
+        });
     }
 
     handleInput(value){
