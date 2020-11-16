@@ -79,22 +79,32 @@ class MapRoute extends HTMLElement {
         shadowRoot.innerHTML = `
             <style>
             :host{
-            width:100%;
-            position:relative;
-            z-index:1
+                width:100%;
+                position:relative;
+                z-index:1
             }
             #mapContainer{
-            width:100%;
-            height:` + height + `px;
-            position:relative;
-            z-index:-1;
+                width:100%;
+                height:` + height + `px;
+                position:relative;
+                z-index:-1;
             }
             map-input{
-            z-index:1000;
+                z-index:1000;
+            }
+            .overlay{
+                position:absolute;
+                z-index:1000;
+                background:var(--button-bg, #eee);
+                padding:1em;
+                margin:0;
+                left:0%;
+                box-shadow: 15px 15px 10px 5px rgba(0,0,0,0.05);
             }
             </style>
             <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
             <map-input origin=` + this.origin + `></map-input>
+            <div id="overlay"></div>
             <div id="mapContainer"></div>`;
 
     }
@@ -269,6 +279,9 @@ class MapRoute extends HTMLElement {
                 // ensure that at least one route was found
                 if (result.routes.length) {
                     result.routes[0].sections.forEach((section) => {
+                        let duration = (new Date(section.arrival.time).getTime() - new Date(section.departure.time).getTime()) / 3600000;
+                        duration = duration - (duration % 1) + "h " + Math.round((duration%1)*60) +"min";
+                        this.shadowRoot.getElementById("overlay").innerHTML='<p class="overlay">'+duration+'</p>';
                         // Create a linestring to use as a point source for the route line
                         let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
 
@@ -305,7 +318,7 @@ class MapRoute extends HTMLElement {
                 // Add origin and destination to the routing parameters
                 routingParameters.origin = start;
                 routingParameters.destination = end;
-                router.calculateRoute(routingParameters, onResult, function(error) {alert(error.message);});
+                router.calculateRoute(routingParameters, onResult.bind(this), function(error) {alert(error.message);});
             }
 
             let service = platform.getSearchService();
@@ -345,6 +358,7 @@ class MapRoute extends HTMLElement {
                 goal = result.items[0].position;
                 makeMarker();
             }, alert);
+            this.shadowRoot.getElementById("overlay").innerHTML="";
 
         }
     }
