@@ -173,7 +173,7 @@ class MapRoute extends HTMLElement {
             this.createMap();
         }
         this.addEventListener('map-input', (e) => {
-            this.origin = e.explicitOriginalTarget.value;
+            this.origin = e.detail.value;
         });
     }
     handleInput(value){
@@ -364,7 +364,7 @@ class MapInput extends HTMLElement {
     }
     handleClick(){
         const input = this.shadowRoot.getElementById("input");
-        input.dispatchEvent(new CustomEvent('map-input', {bubbles: true, composed: true}));
+        input.dispatchEvent(new CustomEvent('map-input', {bubbles: true, composed: true, detail: {value:input.value}}));
     }
 }
 window.customElements.define('map-input', MapInput);
