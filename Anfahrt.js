@@ -151,7 +151,9 @@ class MapRoute extends HTMLElement {
     connectedCallback(){
         let height = this.offsetHeight - 72;
         this.shadowRoot.getElementById("mapContainer").setAttribute("style", "height:" + height+"px");
-        this.shadowRoot.querySelector("map-input").setAttribute("origin", this.origin);
+        if(this.origin){
+            this.shadowRoot.querySelector("map-input").setAttribute("origin", this.origin);
+        }
         if(!this.origin){
             let att = document.createAttribute('origin');
             att.value = " ";
