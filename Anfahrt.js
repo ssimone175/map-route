@@ -1,7 +1,11 @@
 import all from "https://js.api.here.com/v3/3.1/mapsjs.bundle.js";
 let tmpl = document.createElement('template');
-tmpl.innerHTML = `<style>*{
+tmpl.innerHTML = `<style>
+                *{
                 font-size:1em;
+                font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
                 }
                 .form-group{
                     width:100%;
@@ -55,6 +59,9 @@ tmpl.innerHTML = `<style>*{
                     .form-control{
                         width:60%;
                     }
+                }           
+                *{
+                  box-sizing:border-box;
                 }
         </style>
         <div class="form-group">
