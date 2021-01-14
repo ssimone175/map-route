@@ -170,6 +170,9 @@ class MapRoute extends HTMLElement {
             'apikey': this.apikey
         });
         this.platform = platform;
+        this.addEventListener('map-input', (e) => {
+            this.origin = e.detail.value;
+        });
         if(this.destination.trim()){
             let service = platform.getSearchService();
             service.geocode({
@@ -181,9 +184,6 @@ class MapRoute extends HTMLElement {
         }else{
             this.createMap();
         }
-        this.addEventListener('map-input', (e) => {
-            this.origin = e.detail.value;
-        });
     }
     handleInput(value){
         this.origin = value;
